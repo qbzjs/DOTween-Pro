@@ -6,20 +6,31 @@ using UnityEngine.Video;
 
 public class VideoPlayer_script : MonoBehaviour
 {
-    string URL = "Assets/Videos/The Goal - 27070.mp4";
     VideoPlayer videoPlayer;
+
+    string URL = "Assets/Videos/The Goal - 27070.mp4";
+    public VideoClip videoClip;
+
+    // Broadcast pause to other classes
+    public delegate void OnPlay();
+    public static event OnPlay onPlay;
+
+    private void Awake()
+    {
+        GameObject camera = Camera.main.gameObject;
+        videoPlayer = camera.GetComponent<VideoPlayer>();
+    }
 
     private void Start()
     {
-        Init();           
+        Init();
     }
 
     private void Init()
     {
-        GameObject camera = Camera.main.gameObject;
-        videoPlayer = camera.AddComponent<UnityEngine.Video.VideoPlayer>();
+        videoPlayer.url = (videoClip == null) ? URL : videoClip.originalPath;
+
         videoPlayer.playOnAwake = true;
-        videoPlayer.url = URL;
         videoPlayer.isLooping = true;
     }
 
@@ -31,7 +42,11 @@ public class VideoPlayer_script : MonoBehaviour
             {
                 videoPlayer.Pause();
             }
-            else { videoPlayer.Play(); }
+            else
+            {
+                onPlay?.Invoke();
+                videoPlayer.Play();
+            }
         }
     }
 }
