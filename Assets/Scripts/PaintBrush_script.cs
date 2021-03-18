@@ -46,13 +46,16 @@ public class PaintBrush_script : MonoBehaviour
 
             // Code for drawing on a collider
             //-----
-            //Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
 
-            //if (Physics.Raycast(ray, out hit))
-            //{
-            //    Draw(hit.point);
-            //}
+            /*
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Draw(hit.point);
+            }
+            */
         }
     }
 
