@@ -6,9 +6,10 @@ using UnityEngine.Video;
 
 public class VideoPlayer_script : MonoBehaviour
 {
-    VideoPlayer videoPlayer;
+    private VideoPlayer videoPlayer;
+    private VideoProjection_script projection;
 
-    string URL = "Assets/Videos/The Goal - 27070.mp4";
+    private string URL = "Assets/Videos/The Goal - 27070.mp4";
     public VideoClip videoClip;
 
     // Broadcast pause to other classes
@@ -17,20 +18,22 @@ public class VideoPlayer_script : MonoBehaviour
 
     private void Awake()
     {
-        GameObject camera = Camera.main.gameObject;
-        videoPlayer = camera.GetComponent<VideoPlayer>();
+        videoPlayer = GetComponent<VideoPlayer>();
+        projection = GetComponentInChildren<VideoProjection_script>();
     }
 
     private void Start()
     {
-        Init();
+        SetupVideoPlayer();
     }
 
-    private void Init()
+    private void SetupVideoPlayer()
     {
+        videoPlayer.targetTexture = projection.GetProjectionTexture();
         videoPlayer.url = (videoClip == null) ? URL : videoClip.originalPath;
 
-        videoPlayer.playOnAwake = true;
+
+        videoPlayer.playOnAwake = false;
         videoPlayer.isLooping = true;
     }
 
