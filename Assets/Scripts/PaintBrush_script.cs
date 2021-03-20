@@ -8,8 +8,16 @@ public class PaintBrush_script : MonoBehaviour
 {
 
     public GameObject strokePrefab;
+
+    [Range(0.5f, 1.5f)]
+    public float strokeSize;
+
     private Camera camera;
     private VideoPlayer videoPlayer;
+
+    // For stabilizing when drawing fast
+    private Vector3 previousStrokePosition = new Vector3();
+    public int maxStrokes;
 
     private void Awake()
     {
@@ -31,6 +39,8 @@ public class PaintBrush_script : MonoBehaviour
     {
         CheckForInput();
     }
+
+
 
     private void CheckForInput()
     {
@@ -61,8 +71,21 @@ public class PaintBrush_script : MonoBehaviour
 
     private void Draw(Vector3 point)
     {
+        //previousStrokePositions.(point);
+
+        //if (previousStrokePositions.Count > maxStrokes)
+        //{
+        //    previousStrokePositions.Dequeue();
+        //}
+
+        //for (int i = 0; i < previousStrokePositions.Count; i++)
+        //{
+        //}
         GameObject stroke = Instantiate(strokePrefab, point, Quaternion.identity, this.transform);
+        stroke.transform.localScale *= strokeSize;
     }
+
+
 
     // Could be optimized with for instance object pooling
     public void ClearDrawing()

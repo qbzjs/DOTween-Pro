@@ -209,6 +209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strokePrefab: {fileID: 1739517649065838144, guid: d95148bfc1b274a4a8d3e3eba3a00401,
     type: 3}
+  strokeSize: 0.5
+  maxStrokes: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
