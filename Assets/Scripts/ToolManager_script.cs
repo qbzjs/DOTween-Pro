@@ -28,6 +28,11 @@ public class ToolManager_script : MonoBehaviour
 
     private void Start()
     {
+        SetupToolPositions();
+    }
+
+    private void SetupToolPositions()
+    {
         activatedToolsXPositions = new float[toolTransforms.Length];
         deactivatedToolsXPositions = new float[toolTransforms.Length];
 
