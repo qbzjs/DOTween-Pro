@@ -49,20 +49,30 @@ namespace FreeDraw
         //////////////////////////////////////////////////////////////////////////////
         // Additions to original script
 
+        private bool isPaused;
+
         private void OnEnable()
         {
-            VideoPlayer_script.onPlay += ClearDrawing;
+            VideoPlayer_script.onPlay += OnPlayEvent;
+            VideoPlayer_script.onPause += OnPauseEvent;
         }
 
         private void OnDisable()
         {
             ResetCanvas();
-            VideoPlayer_script.onPlay -= ClearDrawing;
+            VideoPlayer_script.onPlay -= OnPlayEvent;
+            VideoPlayer_script.onPause -= OnPauseEvent;
         }
 
-        private void ClearDrawing()
+        private void OnPlayEvent()
         {
+            isPaused = false;
             ResetCanvas();
+        }
+
+        private void OnPauseEvent()
+        {
+            isPaused = true;
         }
 
 
@@ -157,7 +167,7 @@ namespace FreeDraw
         {
             // Is the user holding down the left mouse button?
             bool mouse_held_down = Input.GetMouseButton(0);
-            if (mouse_held_down && !no_drawing_on_current_drag)
+            if (mouse_held_down && !no_drawing_on_current_drag && isPaused)
             {
                 // Convert mouse coordinates to world coordinates
                 Vector2 mouse_world_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -218,6 +228,9 @@ namespace FreeDraw
 
         public void MarkPixelsToColour(Vector2 center_pixel, int pen_thickness, Color color_of_pen)
         {
+
+            //TODO: check whether paused or adjusting UI here 
+
             // Figure out how many pixels we need to colour in each direction (x and y)
             int center_x = (int)center_pixel.x;
             int center_y = (int)center_pixel.y;

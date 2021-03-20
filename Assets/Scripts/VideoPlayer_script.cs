@@ -44,6 +44,7 @@ public class VideoPlayer_script : MonoBehaviour
         {
             if (videoPlayer.isPlaying)
             {
+                onPause?.Invoke();
                 videoPlayer.Pause();
             }
             else
