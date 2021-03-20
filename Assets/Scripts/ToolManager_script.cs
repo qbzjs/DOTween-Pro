@@ -14,6 +14,13 @@ public class ToolManager_script : MonoBehaviour
     public float distance = 300;
     public float duration = 1;
 
+    enum Tools
+    {
+        zoom, red, green, blue, eraser
+    }
+
+
+
     private void OnEnable()
     {
         VideoPlayer_script.onPause += FadeInTools;

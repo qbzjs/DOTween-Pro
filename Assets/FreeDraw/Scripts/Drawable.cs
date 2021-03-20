@@ -50,6 +50,7 @@ namespace FreeDraw
         // Additions to original script
 
         private bool isPaused;
+        private bool isActive;
 
         private void OnEnable()
         {
