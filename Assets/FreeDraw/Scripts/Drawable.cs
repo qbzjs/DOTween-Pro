@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,7 +47,23 @@ namespace FreeDraw
 
 
         //////////////////////////////////////////////////////////////////////////////
-        // BRUSH TYPES. Implement your own here
+        // Additions to original script
+
+        private void OnEnable()
+        {
+            VideoPlayer_script.onPlay += ClearDrawing;
+        }
+
+        private void OnDisable()
+        {
+            ResetCanvas();
+            VideoPlayer_script.onPlay -= ClearDrawing;
+        }
+
+        private void ClearDrawing()
+        {
+            ResetCanvas();
+        }
 
 
         // When you want to make your own type of brush effects,

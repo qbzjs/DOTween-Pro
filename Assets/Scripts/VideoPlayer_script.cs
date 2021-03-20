@@ -13,8 +13,9 @@ public class VideoPlayer_script : MonoBehaviour
     public VideoClip videoClip;
 
     // Broadcast pause to other classes
-    public delegate void OnPlay();
-    public static event OnPlay onPlay;
+    public delegate void OnPlayPlause();
+    public static event OnPlayPlause onPlay;
+    public static event OnPlayPlause onPause;
 
     private void Awake()
     {
