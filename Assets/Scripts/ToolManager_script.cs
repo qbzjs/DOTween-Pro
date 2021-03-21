@@ -9,6 +9,7 @@ public class ToolManager_script : MonoBehaviour
 {
     public RectTransform[] toolTransforms;
     public DrawingSettings settings;
+    public Image markerImage;
 
     private float[] activatedToolsXPositions;
     private float[] deactivatedToolsXPositions;
@@ -34,6 +35,16 @@ public class ToolManager_script : MonoBehaviour
     private void Start()
     {
         SetupToolPositions();
+        SetupInitialDrawColor();
+    }
+
+    private void SetupInitialDrawColor()
+    {
+        EquipDrawTool();
+        Color color = Color.green;
+        settings.SetColorCustom(color);
+        markerImage.color = color;
+        print("Image color: " + markerImage.color);
     }
 
     private void SetupToolPositions()
@@ -43,13 +54,20 @@ public class ToolManager_script : MonoBehaviour
 
         for (int i = 0; i < toolTransforms.Length; i++)
         {
+            // Store to and from tween positions of the tools
             activatedToolsXPositions[i] = toolTransforms[i].position.x;
             deactivatedToolsXPositions[i] = activatedToolsXPositions[i] + distance;
             Vector3 startPosition = new Vector3(deactivatedToolsXPositions[i], toolTransforms[i].position.y, toolTransforms[i].position.z);
-            toolTransforms[i].position = startPosition;
+
+            // Have the magnifying tool stay on screen
+            if (i > 0)
+            {
+                toolTransforms[i].position = startPosition;
+            }
         }
     }
 
+    // Function for tweening in the tools on pause
     private void FadeInTools()
     {
         for (int i = 1; i < toolTransforms.Length; i++)
@@ -58,6 +76,7 @@ public class ToolManager_script : MonoBehaviour
         }
     }
 
+    // Function for tweening out the tools on play
     private void FadeOutTools()
     {
         for (int i = 1; i < toolTransforms.Length; i++)
@@ -91,5 +110,6 @@ public class ToolManager_script : MonoBehaviour
         EquipDrawTool();
         Color color = inputImage.color;
         settings.SetColorCustom(color);
+        markerImage.color = color;
     }
 }

@@ -208,6 +208,7 @@ MonoBehaviour:
   - {fileID: 344625351}
   - {fileID: 953919503}
   settings: {fileID: 1038652463}
+  markerImage: {fileID: 1163174010}
   distance: 500
   duration: 0.5
 --- !u!4 &440892609
@@ -231,6 +232,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3097265497971098832, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3097265497971098832, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3097265497971098832, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675832322922810476, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675832322922810476, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675832322922810476, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5251760159387111389, guid: 50ce2b2b280ccd649b86688bdaf0459c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -266,6 +297,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 953919505}
+    - target: {fileID: 6872144542083150052, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Name
+      value: SetMarker
+      objectReference: {fileID: 0}
     - target: {fileID: 6872144542083150058, guid: 50ce2b2b280ccd649b86688bdaf0459c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -291,6 +327,21 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 226d13cbafbff8f4792b16cb58eb9dcc, type: 2}
+    - target: {fileID: 6872144542083150059, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872144542083150059, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872144542083150059, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6872144542224373508, guid: 50ce2b2b280ccd649b86688bdaf0459c,
         type: 3}
       propertyPath: m_Material
@@ -576,6 +627,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 261676540}
+    - target: {fileID: 8154004525652458075, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8154004525652458075, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50ce2b2b280ccd649b86688bdaf0459c, type: 3}
 --- !u!224 &622720302 stripped
@@ -846,6 +907,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03510ea897333a3478c3615be62b832e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1163174010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6872144542083150059, guid: 50ce2b2b280ccd649b86688bdaf0459c,
+    type: 3}
+  m_PrefabInstance: {fileID: 578691662}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1220446989 stripped
