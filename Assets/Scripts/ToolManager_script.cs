@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using FreeDraw;
 
 public class ToolManager_script : MonoBehaviour
 {
     public RectTransform[] toolTransforms;
+    public DrawingSettings settings;
 
     private float[] activatedToolsXPositions;
     private float[] deactivatedToolsXPositions;
@@ -13,11 +16,6 @@ public class ToolManager_script : MonoBehaviour
     [Header("Move In/Out Controls")]
     public float distance = 300;
     public float duration = 1;
-
-    enum Tools
-    {
-        zoom, red, green, blue, eraser
-    }
 
 
 
@@ -54,7 +52,7 @@ public class ToolManager_script : MonoBehaviour
 
     private void FadeInTools()
     {
-        for (int i = 0; i < toolTransforms.Length; i++)
+        for (int i = 1; i < toolTransforms.Length; i++)
         {
             toolTransforms[i].DOMoveX(activatedToolsXPositions[i], duration);
         }
@@ -62,9 +60,36 @@ public class ToolManager_script : MonoBehaviour
 
     private void FadeOutTools()
     {
-        for (int i = 0; i < toolTransforms.Length; i++)
+        for (int i = 1; i < toolTransforms.Length; i++)
         {
             toolTransforms[i].DOMoveX(deactivatedToolsXPositions[i], duration);
         }
+    }
+
+
+    //---------------------//
+    // UI button functions //
+    //---------------------//
+
+    public void EquipZoomTool()
+    {
+
+    }
+
+    public void EquipDrawTool()
+    {
+
+    }
+
+    public void EquipEraser()
+    {
+        settings.SetEraser();
+    }
+
+    public void ChangeDrawColor(Image inputImage)
+    {
+        EquipDrawTool();
+        Color color = inputImage.color;
+        settings.SetColorCustom(color);
     }
 }

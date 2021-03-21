@@ -36,6 +36,16 @@ namespace FreeDraw
 
 
         // Call these these to change the pen settings
+
+        public void SetColorCustom(Color inputColor)
+        {
+            Color c = inputColor;
+            c.a = Transparency;
+            print("Input color: " + c);
+            SetMarkerColour(c);
+            Drawable.drawable.SetPenBrush();
+        }
+
         public void SetMarkerRed()
         {
             Color c = Color.red;

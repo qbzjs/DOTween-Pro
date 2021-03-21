@@ -24,8 +24,13 @@ public class ZoomToolController_script : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            Vector3 mouseInWorldCoordinates = camera.ScreenToWorldPoint(Input.mousePosition);
-            this.transform.position = new Vector3(mouseInWorldCoordinates.x, mouseInWorldCoordinates.y, this.transform.position.z);
+            SetZoomTool();
         }
+    }
+
+    private void SetZoomTool()
+    {
+        Vector3 mouseInWorldCoordinates = camera.ScreenToWorldPoint(Input.mousePosition);
+        this.transform.position = new Vector3(mouseInWorldCoordinates.x, mouseInWorldCoordinates.y, this.transform.position.z);
     }
 }
