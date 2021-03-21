@@ -7,9 +7,15 @@ using FreeDraw;
 
 public class ToolManager_script : MonoBehaviour
 {
-    public RectTransform[] toolTransforms;
+    [Header("Public references")]
+    public RectTransform[] drawToolTransforms;
     public DrawingSettings settings;
     public Image markerImage;
+    public Image eraserImage;
+    public Image zoomImage;
+    public ZoomToolController_script zoomTool;
+
+    private Color activeColor;
 
     private float[] activatedToolsXPositions;
     private float[] deactivatedToolsXPositions;
@@ -18,6 +24,12 @@ public class ToolManager_script : MonoBehaviour
     public float distance = 300;
     public float duration = 1;
 
+    private enum Tools
+    {
+        zoom, marker, eraser
+    }
+
+    private Tools tool = new Tools();
 
 
     private void OnEnable()
@@ -41,47 +53,41 @@ public class ToolManager_script : MonoBehaviour
     private void SetupInitialDrawColor()
     {
         EquipDrawTool();
-        Color color = Color.green;
-        settings.SetColorCustom(color);
-        markerImage.color = color;
-        print("Image color: " + markerImage.color);
+        activeColor = Color.green;
+        settings.SetColorCustom(activeColor);
+        markerImage.color = activeColor;
     }
 
+    // Store to and from tween positions of the draw tools
     private void SetupToolPositions()
     {
-        activatedToolsXPositions = new float[toolTransforms.Length];
-        deactivatedToolsXPositions = new float[toolTransforms.Length];
+        activatedToolsXPositions = new float[drawToolTransforms.Length];
+        deactivatedToolsXPositions = new float[drawToolTransforms.Length];
 
-        for (int i = 0; i < toolTransforms.Length; i++)
+        for (int i = 0; i < drawToolTransforms.Length; i++)
         {
-            // Store to and from tween positions of the tools
-            activatedToolsXPositions[i] = toolTransforms[i].position.x;
+            activatedToolsXPositions[i] = drawToolTransforms[i].position.x;
             deactivatedToolsXPositions[i] = activatedToolsXPositions[i] + distance;
-            Vector3 startPosition = new Vector3(deactivatedToolsXPositions[i], toolTransforms[i].position.y, toolTransforms[i].position.z);
-
-            // Have the magnifying tool stay on screen
-            if (i > 0)
-            {
-                toolTransforms[i].position = startPosition;
-            }
+            Vector3 startPosition = new Vector3(deactivatedToolsXPositions[i], drawToolTransforms[i].position.y, drawToolTransforms[i].position.z);
+            drawToolTransforms[i].position = startPosition;
         }
     }
 
-    // Function for tweening in the tools on pause
+    // Function for tweening in the tools on pause, zoom tool excluded
     private void FadeInTools()
     {
-        for (int i = 1; i < toolTransforms.Length; i++)
+        for (int i = 0; i < drawToolTransforms.Length; i++)
         {
-            toolTransforms[i].DOMoveX(activatedToolsXPositions[i], duration);
+            drawToolTransforms[i].DOMoveX(activatedToolsXPositions[i], duration);
         }
     }
 
-    // Function for tweening out the tools on play
+    // Function for tweening out the tools on play, zoom tool excluded
     private void FadeOutTools()
     {
-        for (int i = 1; i < toolTransforms.Length; i++)
+        for (int i = 0; i < drawToolTransforms.Length; i++)
         {
-            toolTransforms[i].DOMoveX(deactivatedToolsXPositions[i], duration);
+            drawToolTransforms[i].DOMoveX(deactivatedToolsXPositions[i], duration);
         }
     }
 
@@ -90,26 +96,74 @@ public class ToolManager_script : MonoBehaviour
     // UI button functions //
     //---------------------//
 
+    // Method for equiping the zoom tool by using the UI button
     public void EquipZoomTool()
     {
-
+        print("PRESSED ZOOM");
+        SetEquipedTool(Tools.zoom);
     }
 
+    // Method for equiping the draw tool by using the UI button
     public void EquipDrawTool()
     {
-
+        SetEquipedTool(Tools.marker);
     }
 
+    // Method for equiping the eraser by using the UI button
     public void EquipEraser()
     {
-        settings.SetEraser();
+        SetEquipedTool(Tools.eraser);
     }
 
+    // Method for UI buttons for picking colors 
     public void ChangeDrawColor(Image inputImage)
     {
         EquipDrawTool();
-        Color color = inputImage.color;
-        settings.SetColorCustom(color);
-        markerImage.color = color;
+        activeColor = inputImage.color;
+        settings.SetColorCustom(activeColor);
+        markerImage.color = activeColor;
+    }
+
+    // Overload method for activating draw tool with last selected color
+    public void ChangeDrawColor()
+    {
+        settings.SetColorCustom(activeColor);
+        markerImage.color = activeColor;
+    }
+
+    private void SetEquipedTool(Tools equipedTool)
+    {
+        // Deactivate all tools
+        Drawable.drawable.SetActivation(false);
+        zoomTool.SetActive(false);
+
+        // Remove all selection outlines
+        zoomImage.material.SetFloat("_OutlineEnabled", 0);
+        markerImage.material.SetFloat("_OutlineEnabled", 0);
+        eraserImage.material.SetFloat("_OutlineEnabled", 0);
+
+        // Activate selected tool and outline
+        switch (equipedTool)
+        {
+            case Tools.zoom:
+                zoomTool.SetActive(true);
+                zoomImage.material.SetFloat("_OutlineEnabled", 1);
+
+                break;
+
+            case Tools.marker:
+                markerImage.material.SetFloat("_OutlineEnabled", 1);
+                ChangeDrawColor();
+                Drawable.drawable.SetActivation(true);
+
+                break;
+
+            case Tools.eraser:
+                eraserImage.material.SetFloat("_OutlineEnabled", 1);
+                settings.SetEraser();
+                Drawable.drawable.SetActivation(true);
+                break;
+        }
+
     }
 }

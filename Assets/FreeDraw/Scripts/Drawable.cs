@@ -50,7 +50,12 @@ namespace FreeDraw
         // Additions to original script
 
         private bool isPaused;
-        private bool isActive;
+        private bool isActive = false;
+
+        public void SetActivation(bool _isActive)
+        {
+            isActive = _isActive;
+        }
 
         private void OnEnable()
         {
@@ -158,17 +163,13 @@ namespace FreeDraw
         //////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
         // This is where the magic happens.
         // Detects when user is left clicking, which then call the appropriate function
         void Update()
         {
             // Is the user holding down the left mouse button?
             bool mouse_held_down = Input.GetMouseButton(0);
-            if (mouse_held_down && !no_drawing_on_current_drag && isPaused)
+            if (mouse_held_down && !no_drawing_on_current_drag && isPaused && isActive)
             {
                 // Convert mouse coordinates to world coordinates
                 Vector2 mouse_world_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -205,8 +206,6 @@ namespace FreeDraw
 
         }
 
-
-
         // Set the colour of pixels in a straight line from start_point all the way to end_point, to ensure everything inbetween is coloured
         public void ColourBetween(Vector2 start_point, Vector2 end_point, int width, Color color)
         {
@@ -225,7 +224,6 @@ namespace FreeDraw
                 MarkPixelsToColour(cur_position, width, color);
             }
         }
-
 
         public void MarkPixelsToColour(Vector2 center_pixel, int pen_thickness, Color color_of_pen)
         {

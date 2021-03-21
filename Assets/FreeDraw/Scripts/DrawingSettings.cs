@@ -33,7 +33,6 @@ namespace FreeDraw
         {
             Color c = inputColor;
             c.a = Transparency;
-            print("Input color: " + c);
             Drawable.Pen_Colour = c;
             Drawable.drawable.SetPenBrush();
         }
