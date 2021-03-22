@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ControlPointController_script : MonoBehaviour
 {
     public Canvas inputCanvas;
+    public TextMeshProUGUI worldSpaceText;
+    public TMP_InputField inputField;
 
     private Camera camera;
     private Vector3 screenPoint;
     private Vector3 offset;
     private bool isDragged;
+    private CameraFlyController_script movementScript;
 
     private void Awake()
     {
         camera = Camera.main;
+        movementScript = camera.GetComponent<CameraFlyController_script>();
     }
 
     // Lock and unlock control point in drag state
@@ -39,7 +44,7 @@ public class ControlPointController_script : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("FootballField")))
             {
-                this.transform.position = hit.point; ;
+                this.transform.position = hit.point;
             }
         }
     }
@@ -52,5 +57,14 @@ public class ControlPointController_script : MonoBehaviour
     public void EditText()
     {
         inputCanvas.gameObject.SetActive(true);
+        movementScript.SetActive(false);
+        inputField.text = worldSpaceText.text;
+    }
+
+    public void DoneEditText()
+    {
+        inputCanvas.gameObject.SetActive(false);
+        movementScript.SetActive(true);
+        worldSpaceText.text = inputField.text;
     }
 }

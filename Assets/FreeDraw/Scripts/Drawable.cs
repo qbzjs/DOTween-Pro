@@ -56,6 +56,10 @@ namespace FreeDraw
         {
             isActive = _isActive;
         }
+        private bool IsMouseOverUI()
+        {
+            return EventSystem.current.IsPointerOverGameObject();
+        }
 
         private void OnEnable()
         {
@@ -169,7 +173,7 @@ namespace FreeDraw
         {
             // Is the user holding down the left mouse button?
             bool mouse_held_down = Input.GetMouseButton(0);
-            if (mouse_held_down && !no_drawing_on_current_drag && isPaused && isActive)
+            if (mouse_held_down && !no_drawing_on_current_drag && isPaused && isActive && !IsMouseOverUI())
             {
                 // Convert mouse coordinates to world coordinates
                 Vector2 mouse_world_position = Camera.main.ScreenToWorldPoint(Input.mousePosition);

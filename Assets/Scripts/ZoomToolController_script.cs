@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 public class ZoomToolController_script : MonoBehaviour
 {
     private Camera camera;
@@ -23,25 +21,23 @@ public class ZoomToolController_script : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isActive)
+        // Checking button down to only start the tweening once
+        if (Input.GetMouseButtonDown(0) && isActive && !IsMouseOverUI())
         {
-            print("MouseDOwn");
             if (this.transform.localScale.x != initialScale.x)
             {
-                print("Tweening. Initialscale: " + initialScale);
                 TweenLenseScale(initialScale);
             }
         }
-        else if (Input.GetMouseButton(0) && isActive)
+        // This function moves around the zoom lense
+        else if (Input.GetMouseButton(0) && isActive && !IsMouseOverUI())
         {
             SetZoomTool();
-            print("Mouse hold");
         }
     }
 
     private void SetZoomTool()
     {
-
         Vector3 mouseInWorldCoordinates = camera.ScreenToWorldPoint(Input.mousePosition);
         this.transform.position = new Vector3(mouseInWorldCoordinates.x, mouseInWorldCoordinates.y, this.transform.position.z);
     }
@@ -65,5 +61,10 @@ public class ZoomToolController_script : MonoBehaviour
     public bool GetActive()
     {
         return isActive;
+    }
+
+    private bool IsMouseOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }
