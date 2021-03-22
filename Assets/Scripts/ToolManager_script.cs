@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using FreeDraw;
+using System;
 
 public class ToolManager_script : MonoBehaviour
 {
@@ -42,6 +43,14 @@ public class ToolManager_script : MonoBehaviour
     {
         VideoPlayer_script.onPause -= FadeInTools;
         VideoPlayer_script.onPlay -= FadeOutTools;
+        ResetOutlineMaterials();
+    }
+
+    private void ResetOutlineMaterials()
+    {
+        zoomImage.material.SetFloat("_OutlineEnabled", 0);
+        markerImage.material.SetFloat("_OutlineEnabled", 0);
+        eraserImage.material.SetFloat("_OutlineEnabled", 0);
     }
 
     private void Start()
@@ -64,7 +73,7 @@ public class ToolManager_script : MonoBehaviour
         activatedToolsXPositions = new float[drawToolTransforms.Length];
         deactivatedToolsXPositions = new float[drawToolTransforms.Length];
 
-        for (int i = 0; i < drawToolTransforms.Length; i++)
+        for(int i = 0; i < drawToolTransforms.Length; i++)
         {
             activatedToolsXPositions[i] = drawToolTransforms[i].position.x;
             deactivatedToolsXPositions[i] = activatedToolsXPositions[i] + distance;
@@ -76,7 +85,7 @@ public class ToolManager_script : MonoBehaviour
     // Function for tweening in the tools on pause, zoom tool excluded
     private void FadeInTools()
     {
-        for (int i = 0; i < drawToolTransforms.Length; i++)
+        for(int i = 0; i < drawToolTransforms.Length; i++)
         {
             drawToolTransforms[i].DOMoveX(activatedToolsXPositions[i], duration);
         }
@@ -85,7 +94,7 @@ public class ToolManager_script : MonoBehaviour
     // Function for tweening out the tools on play, zoom tool excluded
     private void FadeOutTools()
     {
-        for (int i = 0; i < drawToolTransforms.Length; i++)
+        for(int i = 0; i < drawToolTransforms.Length; i++)
         {
             drawToolTransforms[i].DOMoveX(deactivatedToolsXPositions[i], duration);
         }
@@ -141,12 +150,10 @@ public class ToolManager_script : MonoBehaviour
         zoomTool.SetActive(false);
 
         // Remove all selection outlines
-        zoomImage.material.SetFloat("_OutlineEnabled", 0);
-        markerImage.material.SetFloat("_OutlineEnabled", 0);
-        eraserImage.material.SetFloat("_OutlineEnabled", 0);
+        ResetOutlineMaterials();
 
         // Activate selected tool and outline
-        switch (equipedTool)
+        switch(equipedTool)
         {
             case Tools.zoom:
                 zoomTool.SetActive(true);
