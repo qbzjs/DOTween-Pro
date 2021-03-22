@@ -44,6 +44,7 @@ public class ZoomToolController_script : MonoBehaviour
 
     private void TweenLenseScale(Vector3 endValue)
     {
+        SoundFX.instance.playSound(ref SoundFX.instance.zoomSlide, 0.5f, true);
         this.transform.DOScale(endValue, tweenDuration);
     }
 

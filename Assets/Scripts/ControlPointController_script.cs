@@ -25,11 +25,15 @@ public class ControlPointController_script : MonoBehaviour
     // Lock and unlock control point in drag state
     void OnMouseDown()
     {
+        //SoundFX.instance.playSound(ref SoundFX.instance.click, 0.6f, true);
+        SoundFX.instance.playSound(ref SoundFX.instance.zoomSlide, 0.1f, true);
+
         isDragged = true;
     }
 
     private void OnMouseUp()
     {
+
         isDragged = false;
     }
 
@@ -56,6 +60,8 @@ public class ControlPointController_script : MonoBehaviour
 
     public void EditText()
     {
+        SoundFX.instance.playSound(ref SoundFX.instance.click, 0.6f, true);
+
         inputCanvas.gameObject.SetActive(true);
         movementScript.SetActive(false);
         inputField.text = worldSpaceText.text;
@@ -63,8 +69,16 @@ public class ControlPointController_script : MonoBehaviour
 
     public void DoneEditText()
     {
+        SoundFX.instance.playSound(ref SoundFX.instance.accept, 0.6f, true);
+
         inputCanvas.gameObject.SetActive(false);
         movementScript.SetActive(true);
         worldSpaceText.text = inputField.text;
+    }
+
+    public void DeletePrefab()
+    {
+        SoundFX.instance.playSound(ref SoundFX.instance.delete, 0.5f, true);
+        Destroy(this.gameObject);
     }
 }

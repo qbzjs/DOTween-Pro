@@ -52,7 +52,7 @@ public class ToolManager_script : MonoBehaviour
 
     private void SetupInitialDrawColor()
     {
-        EquipDrawTool();
+        //EquipDrawTool();
         activeColor = Color.green;
         settings.SetColorCustom(activeColor);
         markerImage.color = activeColor;
@@ -133,6 +133,9 @@ public class ToolManager_script : MonoBehaviour
 
     private void SetEquipedTool(Tools equipedTool)
     {
+        //play sound
+        SoundFX.instance.playSound(ref SoundFX.instance.click, 0.5f, true);
+
         // Deactivate all tools
         Drawable.drawable.SetActivation(false);
         zoomTool.SetActive(false);

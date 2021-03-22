@@ -27,6 +27,7 @@ public class ControlPointCreator_script : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("FootballField")))
         {
+            SoundFX.instance.playSound(ref SoundFX.instance.click2, 0.6f, true);
             Instantiate(prefab, hit.point, Quaternion.identity);
         }
     }
